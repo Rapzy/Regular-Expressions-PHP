@@ -29,10 +29,11 @@
 <?php
 	$str_in = htmlentities($_GET['str_in']);
 	$lang = $_GET['lang'];
-	$str_in = DeleteBadChar($str_in);
-	$str_in = MakeSpaces($str_in);
-	$str_out = ArabicToRoman($str_in);
 	
+	$str_in  = DeleteBadChar($str_in);
+	$str_out = ConvertToRoman($str_in);
+	$str_in  = MakeSpaces($str_in);
+
 	echo "<div><span id='number'>$str_in</span><br><span id='text'>$str_out</span>";
 	if ($lang == 'en') {
 		echo "<br><a href='index.html'>Home</a></div>";
@@ -53,19 +54,37 @@
 		return $str;
 	}
 	function DeleteBadChar($str){
-		$minus = "";
-		if (substr($str,0,1) == '-'){
-			$minus = "-";
-			$str = substr($str,1);
-		}
-		preg_match('[^\D]',$str,$matches);
-		$str = str_replace($matches, '' , trim($str));
+		$str = preg_replace('[^\D]','',$str);
 		while (substr($str,0,1) == '0' && strlen($str) > 1) {
 			$str=substr($str,1);
 		}
-		return $minus.$str;
+		return $str;
 	}
-	function ArabicToRoman($num)
+	function ConvertToRoman($num)
 	{
-		return $num;
+		$arrayName = array(
+			'1000' => 'M',
+			'900'  => 'CM',
+			'500'  => 'D',
+			'400'  => 'CD',
+			'100'  => 'C',
+			'90'   => 'XC',
+			'50'   => 'L',
+			'40'   => 'XL',
+			'10'   => 'X',
+			'9'    => 'IX',
+			'5'    => 'V',
+			'4'    => 'IV',
+			'1'    => 'I'
+			 );
+	if (!$num) return "N";
+	$result = $num >= 1000 ? str_repeat('M',intdiv($num, 1000)) : ""; 
+	$num = str_repeat("I", $num % 1000);
+	while (preg_match('/(I){4,}|([^I])\2{3,}/', $num)){
+		foreach ($arrayName as $number => $value) {
+			$reg = '/(I){'.$number.'}/';
+			$num = preg_replace($reg, $value, $num);
+		}	
 	}
+	return $result.$num;
+}

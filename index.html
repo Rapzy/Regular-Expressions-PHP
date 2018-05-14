@@ -48,20 +48,20 @@
 		</form>
 	</div>
 	<script>
-		var msg = 'Проверьте корректность!';
+		var msg = 'Некорректный Ввод!';
 		document.getElementById("radio2").onclick = function() {
 			document.getElementById("title").innerHTML='Enter number';
 			document.getElementById("btn").value='Submit';
-			msg = 'Check validate!';
+			msg = 'Input Error!';
 		};
 		document.getElementById("radio1").onclick = function() {
 			document.getElementById("title").innerHTML='Введите число';
 			document.getElementById("btn").value='Отправить';
-			msg = 'Проверьте корректность!';
+			msg = 'Некорректный Ввод!';
 		};
 		document.getElementById('btn').onclick = function(event){
 			var str = document.getElementById("str_in").value;
-			if (!isFinite(str) || str == '' || str.trim().length > 21){
+			if (!isFinite(str) || str == '' || Number(str) > 20999 || Number(str) < 0){
 				alert(msg);
 				event.preventDefault();
 				return;
