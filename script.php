@@ -29,7 +29,6 @@
 <?php
 	$str_in = htmlentities($_GET['str_in']);
 	$lang = $_GET['lang'];
-	
 	$str_in  = DeleteBadChar($str_in);
 	$str_out = ConvertToRoman($str_in);
 	$str_in  = MakeSpaces($str_in);
@@ -54,7 +53,7 @@
 		return $str;
 	}
 	function DeleteBadChar($str){
-		$str = preg_replace('[^\D]','',$str);
+		$str = preg_replace('[\D]','',$str);
 		while (substr($str,0,1) == '0' && strlen($str) > 1) {
 			$str=substr($str,1);
 		}
@@ -84,7 +83,7 @@
 		foreach ($arrayName as $number => $value) {
 			$reg = '/(I){'.$number.'}/';
 			$num = preg_replace($reg, $value, $num);
-		}	
+		}
 	}
 	return $result.$num;
 }
