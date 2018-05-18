@@ -7,19 +7,12 @@
 <body>
 	<style type="text/css">
 		body {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			min-height: 100vh;
-			margin: 0;
+			
 		}
 		div {
 			text-align: center;
 		}
-		#number{
-			font-size: 100px;
-		}
-		#text,a{
+		#number,#text,a{
 			font-size: 30px;
 		}
 	</style>
@@ -29,10 +22,13 @@
 <?php
 	$str_in = htmlentities($_GET['str_in']);
 	$lang = $_GET['lang'];
-	$str_in  = DeleteBadChar($str_in);
-	$str_out = ConvertToRoman($str_in);
-	$str_in  = MakeSpaces($str_in);
 
+	preg_match('/[^\D]{1,}/', $str_in, $matches, PREG_OFFSET_CAPTURE);
+	for ($i=0; $i < count($matches); $i++) { 
+		$math = ConvertToRoman($matches[$i][0]);
+		$str_out = substr_replace($str_in, $math, $matches[$i][1],strlen($matches[$i][0]));
+	}
+	
 	echo "<div><span id='number'>$str_in</span><br><span id='text'>$str_out</span>";
 	if ($lang == 'en') {
 		echo "<br><a href='index.html'>Home</a></div>";

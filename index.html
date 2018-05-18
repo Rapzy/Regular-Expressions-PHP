@@ -59,15 +59,6 @@
 			document.getElementById("btn").value='Отправить';
 			msg = 'Некорректный Ввод!';
 		};
-		document.getElementById('btn').onclick = function(event){
-			var str = document.getElementById("str_in").value;
-			if (!isFinite(str) || str == '' || Number(str) > 20999 || Number(str) < 0){
-				alert(msg);
-				event.preventDefault();
-				return;
-			};
-		}
-
 	</script>
 </body>
 </html>
