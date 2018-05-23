@@ -36,25 +36,7 @@
 	else{
 		echo "<br><a href='index.html'>На главную</a></div>";
 	}
-	function MakeSpaces($str){
-		$pos = [];
-		for ($i = strlen($str) - 1; $i >= 0; $i--) {
-			if ((strlen($str) - $i) % 3 == 0) {
-				$pos[count($pos)] = $i;
-			}
-		}
-		for ($i=0; $i < count($pos); $i++) {
-			$str = substr_replace($str, " ", $pos[$i],0);
-		}
-		return $str;
-	}
-	function DeleteBadChar($str){
-		$str = preg_replace('[\D]','',$str);
-		while (substr($str,0,1) == '0' && strlen($str) > 1) {
-			$str=substr($str,1);
-		}
-		return $str;
-	}
+	
 	function ConvertToRoman($num)
 	{
 		$arrayName = array(
