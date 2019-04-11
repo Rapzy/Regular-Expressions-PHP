@@ -22,11 +22,10 @@
 <?php
 	$str_in = htmlentities($_GET['str_in']);
 	$lang = $_GET['lang'];
-
-	preg_match('/[^\D]{1,}/', $str_in, $matches, PREG_OFFSET_CAPTURE);
-	for ($i=0; $i < count($matches); $i++) { 
-		$math = ConvertToRoman($matches[$i][0]);
-		$str_out = substr_replace($str_in, $math, $matches[$i][1],strlen($matches[$i][0]));
+	$str_out = $str_in;
+	while (preg_match('/[\d]{1,}/', $str_out, $matches, PREG_OFFSET_CAPTURE)) { 
+		$math = ConvertToRoman($matches[0][0]);
+		$str_out = substr_replace($str_out, $math, $matches[0][1],strlen($matches[0][0]));
 	}
 	
 	echo "<div><span id='number'>$str_in</span><br><span id='text'>$str_out</span>";
